@@ -13,10 +13,16 @@ Read your project's DESIGN.md to load tokens, constraints, and wireframe mode de
 
 1. Copy the template:
    ```bash
-   cp -r path/to/template/ path/to/your-prototype/
+   cp -r template/ path/to/your-prototype/
    cd path/to/your-prototype/
    rm -rf node_modules && npm install
    ```
+
+   The template includes a **Cafe Explorer sample app**.
+   Use it as a reference for States / Variants / Patterns implementation,
+   then replace the content with your own.
+   Sample files: `data.ts` (mock data), `page.tsx` (list), `cafe/page.tsx` (detail),
+   `map/screens.ts` (screen definitions), `spec/page.tsx` (spec), `qa/page.tsx` (QA cases)
 
 2. Build structure using wireframe tokens (`--wf-*`):
    - `--wf-bg`: background
@@ -48,43 +54,54 @@ Once wireframe is approved:
 
 ### Step 3.5: Screen Map & States/Variants/Patterns
 
-For multi-screen prototypes, set up screen mapping. See `SCREEN_MAP_GUIDE.md`.
+For multi-screen prototypes, set up screen mapping.
+Built into the template. See `SCREEN_MAP_GUIDE.md` for details.
 
 1. Define all screens in `src/app/map/screens.ts` (states / variants / patterns / linksTo)
+   - **State**: User-triggered mode switches within the app (tabs, view toggles). All remain in production
+   - **Variant**: Data-condition displays (loading, empty, error). All remain in production
+   - **Pattern**: Design alternative comparisons. Only one is adopted in production. No in-app toggle UI
+   - WARNING: If the app has a toggle UI for it (e.g. grid/list toggle), it's a State, not a Pattern
 2. Each page reads `_tab`, `_v`, `_p` query params to switch displays
-3. `npm run capture-screens` to auto-capture screenshots
-4. Visit `/map` for React Flow canvas, use ProtoNav bar for State/Variant/Pattern switching
+3. `npm run capture-screens` to auto-capture screenshots (ProtoNav and Next.js dev UI are hidden automatically)
+4. Visit `/map` for React Flow canvas (click nodes to see all screenshots in a panel)
+5. On prototype pages, use the **Compare (N)** button in ProtoNav to open a comparison drawer without leaving the page
+   - Shares the same ScreenPanel component as the Map panel
+   - Auto-follows page navigation (drawer content updates when you navigate to a different screen)
 
 ### Step 4: Output (choose based on use case)
 
-- **Hosting**: Docker build -> deploy -> share URL
+- **Hosting**: Deploy and share URL (GitHub Pages or Docker/Coolify)
 - **Figma**: transfer via `generate_figma_design`
-- **Canvas**: arrange screens for comparison in Pencil
+- **Canvas**: arrange screens for comparison
 
 ### Step 5: Implementation Spec
 
 After prototype approval, write specs on the `/spec` page. See `SPEC_GUIDE.md`.
 
-Sections:
-1. Overview (purpose, user story)
-2. Components (list + inline preview)
-3. Interaction spec (state transition table)
-4. Design tokens (swatches)
-5. Responsive behavior
-6. Edge cases (error, empty, loading, overflow)
-7. Implementation notes (API, types, references)
+1. Replace the template Placeholders in `spec/page.tsx` with actual specifications
+2. Import prototype components for inline display
+3. Fill in these sections:
+   - Overview (purpose, user story)
+   - Components (list + inline preview)
+   - Interaction spec (state transition table)
+   - Design tokens (swatches)
+   - Responsive behavior
+   - Edge cases (error, empty, loading, overflow)
+   - Implementation notes (API, types, references)
 
 ### Step 6: QA Cases
 
 Generate test scenarios on the `/qa` page. See `SPEC_GUIDE.md`.
 
-Categories:
-1. Basic flow (happy path)
-2. Variations (input patterns, devices)
-3. Edge cases (boundaries, errors, race conditions)
-4. Non-functional (performance, accessibility)
-
-Priority levels: P0 (release blocker) / P1 (important) / P2 (nice to have)
+1. Replace `templateSections` in `qa/page.tsx` with actual test cases
+2. Cover these categories:
+   - Basic flow (happy path)
+   - Variations (input patterns, devices)
+   - Edge cases (boundaries, errors, race conditions)
+   - Non-functional (performance, accessibility)
+3. Set priority for each case (P0/P1/P2)
+4. Checkboxes persist in localStorage for progress tracking
 
 ---
 

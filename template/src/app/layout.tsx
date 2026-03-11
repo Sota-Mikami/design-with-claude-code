@@ -16,7 +16,9 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         <ProtoNav />
-        {children}
+        <div className="h-[calc(100vh-40px)] overflow-y-auto">
+          {children}
+        </div>
       </body>
     </html>
   );

@@ -6,6 +6,33 @@ import * as fs from "fs";
 const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 const OUT_DIR = path.join(__dirname, "../public/screenshots");
 
+/**
+ * スクリーンショット撮影前に、アプリ本体に関係ないUI要素を非表示にする。
+ * - ProtoNav（Prototype / Map / Spec / QA のヘッダーナビ）
+ * - Next.js 開発用フローティングボタン（__next-dev-overlay 等）
+ */
+async function hideNonAppElements(page: import("playwright").Page) {
+  await page.evaluate(() => {
+    const style = document.createElement("style");
+    style.id = "capture-hide";
+    style.textContent = `
+      /* ProtoNav header */
+      nav.sticky { display: none !important; }
+      /* Next.js dev overlay / floating button */
+      [data-nextjs-dialog-overlay],
+      [data-nextjs-toast],
+      nextjs-portal,
+      #__next-build-indicator,
+      [class*="__next"] { display: none !important; }
+      /* Adjust body to remove nav gap */
+      body > div:first-child { margin-top: 0 !important; padding-top: 0 !important; }
+    `;
+    document.head.appendChild(style);
+  });
+  // Wait for reflow
+  await page.waitForTimeout(100);
+}
+
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
 
@@ -25,7 +52,7 @@ async function main() {
 
       console.log(`  [state] ${url} -> ${filename}`);
       await page.goto(url, { waitUntil: "networkidle" });
-      await page.waitForTimeout(300);
+      await hideNonAppElements(page);
       await page.screenshot({ path: path.join(OUT_DIR, filename), fullPage: false });
       total++;
     }
@@ -37,7 +64,7 @@ async function main() {
 
       console.log(`  [variant] ${url} -> ${filename}`);
       await page.goto(url, { waitUntil: "networkidle" });
-      await page.waitForTimeout(300);
+      await hideNonAppElements(page);
       await page.screenshot({ path: path.join(OUT_DIR, filename), fullPage: false });
       total++;
     }
@@ -49,7 +76,7 @@ async function main() {
 
       console.log(`  [pattern] ${url} -> ${filename}`);
       await page.goto(url, { waitUntil: "networkidle" });
-      await page.waitForTimeout(300);
+      await hideNonAppElements(page);
       await page.screenshot({ path: path.join(OUT_DIR, filename), fullPage: false });
       total++;
     }

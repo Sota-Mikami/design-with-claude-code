@@ -73,14 +73,14 @@ export function ScreenNode({ data }: NodeProps) {
       </div>
 
       <div
-        className="bg-white rounded-lg border border-wf-border shadow-md w-[280px] cursor-pointer hover:shadow-lg hover:border-wf-accent/50 transition-all"
+        className="bg-white rounded-md border border-wf-border shadow-md w-[280px] cursor-pointer hover:shadow-lg hover:border-wf-accent/50 transition-all"
         onClick={handleCardClick}
       >
         <Handle type="target" position={Position.Left} className="!w-2 !h-2 !bg-slate-400 !border-white" />
         <Handle type="source" position={Position.Right} className="!w-2 !h-2 !bg-slate-400 !border-white" />
 
         <div className="p-3">
-          <div className="rounded border border-wf-border overflow-hidden">
+          <div className="rounded-sm border border-wf-border overflow-hidden">
             <div className="aspect-[16/10] bg-wf-surface overflow-hidden">
               <img
                 src={screenshotSrc(screen.id, screen.states[0].id)}

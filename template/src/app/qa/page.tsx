@@ -2,6 +2,13 @@
 
 import { useState, useEffect } from "react";
 
+/**
+ * QA チェックリスト — Cafe Explorer サンプル
+ *
+ * テンプレート使用時はこの内容を実際のテストケースに書き換えてください。
+ * チェック状態は localStorage に保存されます。
+ */
+
 type Priority = "P0" | "P1" | "P2";
 
 interface TestCase {
@@ -26,79 +33,110 @@ const priorityStyles: Record<Priority, string> = {
 
 const templateSections: QASection[] = [
   {
-    id: "basic-flow",
-    title: "Basic Flow",
+    id: "cafe-list",
+    title: "カフェ一覧",
     cases: [
       {
-        id: "basic-1",
-        title: "Happy path: complete main flow",
+        id: "list-1",
+        title: "一覧表示: グリッド <-> リスト切替",
         steps: [
-          "Open the screen",
-          "Perform the main action",
-          "Verify the result",
+          "トップページを開く",
+          "右上のグリッド/リストトグルをクリックする",
+          "表示が切り替わることを確認する",
         ],
-        expected: "Expected result goes here",
-        priority: "P0",
-      },
-    ],
-  },
-  {
-    id: "variations",
-    title: "Variations",
-    cases: [
-      {
-        id: "var-1",
-        title: "Input: minimum value",
-        steps: ["Operate with minimum input"],
-        expected: "Processes normally",
-        priority: "P1",
-      },
-      {
-        id: "var-2",
-        title: "Input: maximum value",
-        steps: ["Operate with maximum input"],
-        expected: "Processes normally",
-        priority: "P1",
-      },
-    ],
-  },
-  {
-    id: "edge-cases",
-    title: "Edge Cases",
-    cases: [
-      {
-        id: "edge-1",
-        title: "Error: network disconnect",
-        steps: ["Operate while offline"],
-        expected: "Error message is displayed",
+        expected: "グリッド表示（3列）とリスト表示が切り替わり、カフェ情報が正しく表示される",
         priority: "P0",
       },
       {
-        id: "edge-2",
-        title: "Boundary: empty data",
-        steps: ["Open screen with 0 records"],
-        expected: "Empty state UI is shown",
+        id: "list-2",
+        title: "空状態: 検索結果なし",
+        steps: [
+          "/?_v=empty にアクセスする",
+          "空状態のUIが表示されることを確認する",
+        ],
+        expected: "「見つかりませんでした」メッセージと検索条件変更の案内が表示される",
+        priority: "P1",
+      },
+      {
+        id: "list-3",
+        title: "ローディング状態",
+        steps: [
+          "/?_v=loading にアクセスする",
+          "スケルトンUIが表示されることを確認する",
+        ],
+        expected: "カードのスケルトン（アニメーション付き）が6枚表示される",
         priority: "P1",
       },
     ],
   },
   {
-    id: "non-functional",
-    title: "Non-functional",
+    id: "cafe-detail",
+    title: "カフェ詳細",
     cases: [
       {
-        id: "nf-1",
-        title: "Performance: initial load",
-        steps: ["Open screen without cache"],
-        expected: "Displays within 3 seconds",
-        priority: "P1",
+        id: "detail-1",
+        title: "タブ切替: メニュー -> レビュー",
+        steps: [
+          "/cafe を開く（メニュータブがデフォルト）",
+          "「Reviews」タブをクリックする",
+          "レビュー一覧が表示されることを確認する",
+        ],
+        expected: "タブの下線がReviewsに移動し、レビューカードが表示される",
+        priority: "P0",
       },
       {
-        id: "nf-2",
-        title: "Accessibility: keyboard navigation",
-        steps: ["Navigate all elements using Tab key"],
-        expected: "All actions can be completed via keyboard",
-        priority: "P2",
+        id: "detail-2",
+        title: "レビュー表示パターン: カード型 vs タイムライン型",
+        steps: [
+          "/cafe?_tab=reviews にアクセス（カード型）",
+          "/cafe?_tab=reviews&_p=timeline-review にアクセス（タイムライン型）",
+          "両方の表示を比較する",
+        ],
+        expected: "カード型は独立カード、タイムライン型は縦線で繋がった表示になる",
+        priority: "P0",
+      },
+      {
+        id: "detail-3",
+        title: "レビューなし状態",
+        steps: [
+          "/cafe?_tab=reviews&_v=no-reviews にアクセスする",
+        ],
+        expected: "「まだレビューがありません」+ 「レビューを書く」CTAが表示される",
+        priority: "P1",
+      },
+    ],
+  },
+  {
+    id: "navigation",
+    title: "ナビゲーション",
+    cases: [
+      {
+        id: "nav-1",
+        title: "一覧 -> 詳細への遷移",
+        steps: [
+          "トップページのカフェカードをクリックする",
+        ],
+        expected: "カフェ詳細画面に遷移する",
+        priority: "P0",
+      },
+      {
+        id: "nav-2",
+        title: "詳細 -> 一覧への戻り",
+        steps: [
+          "/cafe を開く",
+          "「Back」リンクをクリックする",
+        ],
+        expected: "カフェ一覧画面に戻る",
+        priority: "P0",
+      },
+      {
+        id: "nav-3",
+        title: "ProtoNav のタブ切替",
+        steps: [
+          "上部ナビの Prototype / Map / Spec / QA を順にクリックする",
+        ],
+        expected: "各ページに正しく遷移し、アクティブタブがハイライトされる",
+        priority: "P1",
       },
     ],
   },
@@ -188,14 +226,14 @@ function TestCaseCard({
             </span>
           </div>
           <div className="text-sm space-y-1">
-            <p className="text-text-sub font-medium">Steps:</p>
+            <p className="text-text-sub font-medium">手順:</p>
             <ol className="list-decimal list-inside text-text-sub space-y-0.5 pl-1">
               {tc.steps.map((step, i) => (
                 <li key={i}>{step}</li>
               ))}
             </ol>
             <p className="text-text-sub mt-2">
-              <span className="font-medium">Expected:</span> {tc.expected}
+              <span className="font-medium">期待結果:</span> {tc.expected}
             </p>
           </div>
         </div>
@@ -215,21 +253,22 @@ export default function QAPage() {
   return (
     <main className="max-w-2xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-2xl font-bold">QA Checklist</h1>
+        <h1 className="text-2xl font-bold">QA チェックリスト</h1>
         <button
           onClick={reset}
           className="text-xs text-text-hint hover:text-text-sub transition-colors px-2 py-1 border border-border rounded"
         >
-          Reset
+          リセット
         </button>
       </div>
       <p className="text-text-sub text-sm mb-6">
-        Test cases for this prototype. Check state is saved in browser storage.
+        Cafe Explorer プロトタイプのテストケース（サンプル）
       </p>
 
+      {/* プログレスバー */}
       <div className="mb-8">
         <div className="flex items-center justify-between text-sm mb-1">
-          <span className="text-text-sub">Progress</span>
+          <span className="text-text-sub">進捗</span>
           <span className="font-mono text-text-sub">
             {checkedCount}/{totalCount}
           </span>
@@ -242,6 +281,7 @@ export default function QAPage() {
         </div>
       </div>
 
+      {/* セクションナビ */}
       <nav className="flex flex-wrap gap-2 mb-8 text-sm">
         {templateSections.map((s) => (
           <a
@@ -254,6 +294,7 @@ export default function QAPage() {
         ))}
       </nav>
 
+      {/* テストケース */}
       {templateSections.map((section) => (
         <section key={section.id} className="mb-10">
           <h2

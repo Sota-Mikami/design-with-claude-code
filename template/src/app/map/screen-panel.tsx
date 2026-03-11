@@ -17,18 +17,22 @@ function patternScreenshotSrc(screenId: string, patternId: string) {
   return `${getBasePath()}/screenshots/${screenId}--p-${patternId}.png`;
 }
 
+/* ── Screenshot card for State / Variant ── */
+
 function ScreenshotCard({
   screenId,
   item,
   path,
   isVariant,
   compact,
+  color,
 }: {
   screenId: string;
   item: ScreenState | ScreenVariant;
   path: string;
   isVariant?: boolean;
   compact?: boolean;
+  color: "gray" | "orange";
 }) {
   const query = item.query ? `?${item.query}` : "";
   const href = `${getBasePath()}${path}${query}`;
@@ -36,23 +40,14 @@ function ScreenshotCard({
     ? variantScreenshotSrc(screenId, item.id)
     : screenshotSrc(screenId, item.id);
 
+  const dotColor = color === "orange" ? "bg-orange-400" : "bg-gray-400";
+  const labelColor = color === "orange" ? "text-orange-700" : "text-wf-text";
+
   return (
     <div>
-      <div className={`flex items-center gap-1.5 ${compact ? "mb-1" : "mb-2"}`}>
-        <span className={`font-medium text-wf-text truncate ${compact ? "text-xs" : "text-sm"}`}>
-          {item.label}
-        </span>
-        {!compact && item.query && (
-          <span className="text-[11px] text-wf-text-sub font-mono px-1.5 py-0.5 bg-wf-surface rounded shrink-0">
-            ?{item.query}
-          </span>
-        )}
-      </div>
       <a
         href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block rounded-lg border border-wf-border overflow-hidden hover:border-wf-accent hover:shadow-md transition-all"
+        className="block rounded-sm border border-wf-border overflow-hidden hover:border-wf-accent hover:shadow-md transition-all"
       >
         <img
           src={imgSrc}
@@ -63,9 +58,21 @@ function ScreenshotCard({
           }}
         />
       </a>
+      <div className={`${compact ? "mt-1.5" : "mt-2"}`}>
+        <span className={`font-medium leading-tight text-wf-text-sub ${compact ? "text-[11px]" : "text-xs"}`}>
+          {item.label}
+        </span>
+        {!compact && item.query && (
+          <span className="text-[10px] text-wf-text-sub/60 font-mono mt-0.5 block">
+            ?{item.query}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
+
+/* ── Screenshot card for Pattern ── */
 
 function PatternCard({
   screenId,
@@ -83,21 +90,9 @@ function PatternCard({
 
   return (
     <div>
-      <div className={compact ? "mb-1" : "mb-2"}>
-        <span className={`font-medium text-wf-text truncate ${compact ? "text-xs" : "text-sm"}`}>
-          {pattern.label}
-        </span>
-      </div>
-      {!compact && (
-        <p className="text-xs text-wf-text-sub mb-3 leading-relaxed">
-          {pattern.description}
-        </p>
-      )}
       <a
         href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block rounded-lg border border-wf-border overflow-hidden hover:border-wf-accent hover:shadow-md transition-all"
+        className="block rounded-sm border border-wf-border overflow-hidden hover:border-violet-400 hover:shadow-md transition-all"
       >
         <img
           src={imgSrc}
@@ -108,9 +103,21 @@ function PatternCard({
           }}
         />
       </a>
+      <div className={`${compact ? "mt-1.5" : "mt-2"}`}>
+        <span className={`font-medium leading-tight text-wf-text-sub ${compact ? "text-[11px]" : "text-xs"}`}>
+          {pattern.label}
+        </span>
+        {!compact && pattern.description && (
+          <p className="text-[10px] text-wf-text-sub/60 mt-0.5 leading-relaxed">
+            {pattern.description}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
+
+/* ── Sticky section header ── */
 
 function SectionHeader({
   label,
@@ -136,13 +143,13 @@ function SectionHeader({
       className={`sticky z-10 ${s.bg} border-b ${s.border} shadow-[0_1px_3px_rgba(0,0,0,0.04)]`}
       style={{ top: isSubGroup ? 32 : 0 }}
     >
-      <div className={`flex items-center gap-2 ${isSubGroup ? "px-5 py-1.5" : "px-5 py-2"}`}>
+      <div className={`flex items-center gap-2 ${isSubGroup ? "px-5 py-1.5" : "px-5 py-2.5"}`}>
         {isSubGroup && <span className={`w-1 h-1 rounded-full ${s.text.replace("text-", "bg-")}`} />}
-        <h3 className={`text-[11px] font-bold uppercase tracking-wider ${s.text}`}>
+        <h3 className={`font-bold uppercase tracking-wider ${s.text} ${isSubGroup ? "text-[11px]" : "text-xs"}`}>
           {label}
         </h3>
         {sub && (
-          <span className={`text-[10px] font-normal normal-case ${s.subText}`}>
+          <span className={`text-[10px] font-medium normal-case ${s.subText}`}>
             {sub}
           </span>
         )}
@@ -150,6 +157,8 @@ function SectionHeader({
     </div>
   );
 }
+
+/* ── Column switcher ── */
 
 const COLUMN_OPTIONS = [1, 2, 3, 4, 6] as const;
 type ColumnCount = (typeof COLUMN_OPTIONS)[number];
@@ -202,6 +211,8 @@ function ColumnSwitcher({
   );
 }
 
+/* ── Grid wrapper ── */
+
 function CardGrid({
   cols,
   children,
@@ -224,6 +235,8 @@ function CardGrid({
     </div>
   );
 }
+
+/* ── Panel ── */
 
 const MIN_WIDTH = 320;
 const MAX_WIDTH = 2400;
@@ -303,6 +316,7 @@ export function ScreenPanel({ screen, onClose }: Props) {
     document.body.style.userSelect = "none";
   };
 
+  // Build pattern groups
   const patternGroups: { name: string; items: ScreenPattern[] }[] = [];
   if (screen?.patterns) {
     const seen = new Set<string>();
@@ -325,6 +339,7 @@ export function ScreenPanel({ screen, onClose }: Props) {
       }`}
       style={{ width }}
     >
+      {/* Resize handle */}
       <div
         className="absolute top-0 left-0 w-1.5 h-full cursor-col-resize hover:bg-wf-accent/20 active:bg-wf-accent/30 transition-colors z-10"
         onMouseDown={onResizeStart}
@@ -333,6 +348,7 @@ export function ScreenPanel({ screen, onClose }: Props) {
       <div className="h-full bg-white border-l border-wf-border shadow-xl flex flex-col">
         {screen && (
           <>
+            {/* Fixed header */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-wf-border shrink-0">
               <div className="min-w-0">
                 <h2 className="text-base font-bold text-wf-text truncate">
@@ -353,7 +369,9 @@ export function ScreenPanel({ screen, onClose }: Props) {
               </div>
             </div>
 
+            {/* Scrollable content — flat structure for sticky headers */}
             <div className="flex-1 overflow-y-auto">
+              {/* States */}
               <SectionHeader
                 label="States"
                 sub={`${screen.states.length} states`}
@@ -367,11 +385,13 @@ export function ScreenPanel({ screen, onClose }: Props) {
                     item={state}
                     path={screen.path}
                     compact={compact}
+                    color="gray"
                   />
                 ))}
               </CardGrid>
               <div className="h-4" />
 
+              {/* Variants */}
               {hasVariants && (
                 <>
                   <SectionHeader
@@ -388,6 +408,7 @@ export function ScreenPanel({ screen, onClose }: Props) {
                         path={screen.path}
                         isVariant
                         compact={compact}
+                        color="orange"
                       />
                     ))}
                   </CardGrid>
@@ -395,6 +416,7 @@ export function ScreenPanel({ screen, onClose }: Props) {
                 </>
               )}
 
+              {/* Patterns */}
               {hasPatterns && (
                 <>
                   <SectionHeader
