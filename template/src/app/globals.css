@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* === Palette: Orange (Sample — replace with your brand colors) === */
-  --color-orange-100: #FFF6F2;
-  --color-orange-200: #FFECE4;
-  --color-orange-300: #FFD8C6;
-  --color-orange-400: #FFC1A1;
-  --color-orange-500: #FFA772;
-  --color-orange-600: #FF8900;
-  --color-orange-700: #E47B00;
-  --color-orange-800: #C66A00;
-  --color-orange-900: #A15700;
-  --color-orange-1000: #723D00;
+  /* === Palette: Indigo (Sample — replace with your brand colors) === */
+  --color-indigo-100: #F4F5FC;
+  --color-indigo-200: #E8EAF6;
+  --color-indigo-300: #C5CAE9;
+  --color-indigo-400: #9FA8DA;
+  --color-indigo-500: #7986CB;
+  --color-indigo-600: #5C6AC4;
+  --color-indigo-700: #4F5BB3;
+  --color-indigo-800: #3F4A9E;
+  --color-indigo-900: #303B82;
+  --color-indigo-1000: #1F275C;
 
   /* === Palette: Gray === */
   --color-gray-100: #F3F3F3;
@@ -31,11 +31,11 @@
   --color-bg-disabled: #C9C9C9;
   --color-bg-overlay: #0000008C;
 
-  --color-primary: #FF8900;
-  --color-primary-hover: #E47B00;
-  --color-primary-press: #C66A00;
-  --color-primary-subtle: #FFECE4;
-  --color-primary-tint: #FFF6F2;
+  --color-primary: #5C6AC4;
+  --color-primary-hover: #4F5BB3;
+  --color-primary-press: #3F4A9E;
+  --color-primary-subtle: #E8EAF6;
+  --color-primary-tint: #F4F5FC;
 
   --color-positive: #55B762;
   --color-positive-hover: #4CA458;
@@ -54,7 +54,7 @@
   --color-text-sub: #7D7D7D;
   --color-text-hint: #A7A7A7;
   --color-text-disabled: #C9C9C9;
-  --color-text-primary: #E47B00;
+  --color-text-primary: #4F5BB3;
   --color-text-positive: #55B762;
   --color-text-negative: #EB5545;
   --color-text-info: #5285DE;
@@ -62,8 +62,8 @@
 
   /* === Semantic: Border === */
   --color-border: #E5E5E5;
-  --color-border-primary: #FF8900;
-  --color-border-focus: #FFC1A1;
+  --color-border-primary: #5C6AC4;
+  --color-border-focus: #9FA8DA;
 
   /* === Wireframe Mode === */
   --color-wf-bg: #FFFFFF;

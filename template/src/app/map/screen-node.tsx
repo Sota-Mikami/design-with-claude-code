@@ -48,7 +48,7 @@ export function ScreenNode({ data }: NodeProps) {
               </span>
             )}
             {variantCount > 0 && (
-              <span className="text-[11px] px-1.5 py-0.5 rounded bg-orange-50 border border-orange-200 text-orange-600 font-medium whitespace-nowrap">
+              <span className="text-[11px] px-1.5 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-600 font-medium whitespace-nowrap">
                 {variantCount} variants
               </span>
             )}

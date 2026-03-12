@@ -168,8 +168,8 @@ export default function SpecPage() {
         この画面で使用しているトークン:
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <TokenSwatch name="--color-primary" value="#FF8900" />
-        <TokenSwatch name="--color-primary-subtle" value="#FFECE4" />
+        <TokenSwatch name="--color-primary" value="#5C6AC4" />
+        <TokenSwatch name="--color-primary-subtle" value="#E8EAF6" />
         <TokenSwatch name="--color-bg" value="#FFFFFF" />
         <TokenSwatch name="--color-bg-surface" value="#F3F3F3" />
         <TokenSwatch name="--color-text" value="#191919" />

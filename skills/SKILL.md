@@ -11,12 +11,14 @@ Read your project's DESIGN.md to load tokens, constraints, and wireframe mode de
 
 ### Step 2: Wireframe (Grayscale)
 
-1. Copy the template:
-   ```bash
-   cp -r template/ path/to/your-prototype/
-   cd path/to/your-prototype/
-   rm -rf node_modules && npm install
-   ```
+1. Confirm the project is set up:
+   - If the user already has a project directory with `package.json`, use it as-is
+   - If starting fresh, copy the template:
+     ```bash
+     cp -r template/ path/to/your-prototype/
+     cd path/to/your-prototype/
+     rm -rf node_modules && npm install
+     ```
 
    The template includes a **Cafe Explorer sample app**.
    Use it as a reference for States / Variants / Patterns implementation,

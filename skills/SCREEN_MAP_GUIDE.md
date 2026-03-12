@@ -196,7 +196,7 @@ The **"Compare (N)" button** in the ProtoNav bar (right side) opens a drawer fro
 | Section | Border | Background | Text |
 |---------|--------|------------|------|
 | States | gray-200 | gray-50 | gray-500 |
-| Variants | orange-200 | orange-50 | orange-600 |
+| Variants | amber-200 | amber-50 | amber-600 |
 | Patterns | violet-200 | violet-50 | violet-600 |
 
 ## Notes

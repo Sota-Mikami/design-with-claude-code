@@ -26,7 +26,7 @@ const cafe = cafes[0]; // Sample: use first cafe as detail target
 
 function CategoryLabel({ category }: { category: MenuItem["category"] }) {
   const map = {
-    coffee: { label: "Coffee", cls: "bg-orange-50 text-orange-700" },
+    coffee: { label: "Coffee", cls: "bg-amber-50 text-amber-700" },
     tea: { label: "Tea", cls: "bg-green-50 text-green-700" },
     food: { label: "Food", cls: "bg-blue-50 text-blue-700" },
     dessert: { label: "Dessert", cls: "bg-pink-50 text-pink-700" },
@@ -46,7 +46,7 @@ function StarRating({ rating }: { rating: number }) {
         <Star
           key={i}
           size={14}
-          className={i < rating ? "text-orange-400 fill-orange-400" : "text-gray-200"}
+          className={i < rating ? "text-amber-400 fill-amber-400" : "text-gray-200"}
         />
       ))}
     </div>
@@ -77,7 +77,7 @@ function MenuTab() {
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-medium text-text">{item.name}</span>
                     {item.popular && (
-                      <span className="flex items-center gap-0.5 text-[11px] text-orange-600 font-medium">
+                      <span className="flex items-center gap-0.5 text-[11px] text-amber-600 font-medium">
                         <Flame size={11} />
                         Popular
                       </span>
@@ -251,7 +251,7 @@ function CafeDetailInner() {
         </div>
         <div className="flex items-center gap-2 mb-3">
           <span className="text-lg font-bold text-primary">{cafe.rating}</span>
-          <span className="text-orange-400">{renderStars(cafe.rating)}</span>
+          <span className="text-amber-400">{renderStars(cafe.rating)}</span>
           <span className="text-sm text-text-hint">({cafe.reviewCount} reviews)</span>
         </div>
         <p className="text-sm text-text-sub leading-relaxed">{cafe.description}</p>

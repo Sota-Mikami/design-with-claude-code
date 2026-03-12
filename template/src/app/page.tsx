@@ -35,7 +35,7 @@ function CafeCardGrid({ cafe }: { cafe: Cafe }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <span className="text-sm font-bold text-primary">{cafe.rating}</span>
-            <span className="text-xs text-orange-400">{renderStars(cafe.rating)}</span>
+            <span className="text-xs text-amber-400">{renderStars(cafe.rating)}</span>
           </div>
           <span className="text-xs text-text-hint">{cafe.reviewCount} reviews</span>
         </div>
@@ -83,7 +83,7 @@ function CafeCardList({ cafe }: { cafe: Cafe }) {
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center gap-1.5">
             <span className="text-sm font-bold text-primary">{cafe.rating}</span>
-            <span className="text-xs text-orange-400">{renderStars(cafe.rating)}</span>
+            <span className="text-xs text-amber-400">{renderStars(cafe.rating)}</span>
             <span className="text-xs text-text-hint ml-1">({cafe.reviewCount})</span>
           </div>
           <div className="flex gap-1">

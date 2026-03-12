@@ -32,7 +32,7 @@ function ScreenshotCard({
   path: string;
   isVariant?: boolean;
   compact?: boolean;
-  color: "gray" | "orange";
+  color: "gray" | "amber";
 }) {
   const query = item.query ? `?${item.query}` : "";
   const href = `${getBasePath()}${path}${query}`;
@@ -40,8 +40,8 @@ function ScreenshotCard({
     ? variantScreenshotSrc(screenId, item.id)
     : screenshotSrc(screenId, item.id);
 
-  const dotColor = color === "orange" ? "bg-orange-400" : "bg-gray-400";
-  const labelColor = color === "orange" ? "text-orange-700" : "text-wf-text";
+  const dotColor = color === "amber" ? "bg-amber-400" : "bg-gray-400";
+  const labelColor = color === "amber" ? "text-amber-700" : "text-wf-text";
 
   return (
     <div>
@@ -127,12 +127,12 @@ function SectionHeader({
 }: {
   label: string;
   sub?: string;
-  color: "gray" | "orange" | "violet";
+  color: "gray" | "amber" | "violet";
   level?: 1 | 2;
 }) {
   const styles = {
     gray:   { bg: "bg-gray-50",   border: "border-gray-200", text: "text-gray-500",  subText: "text-gray-400" },
-    orange: { bg: "bg-orange-50",  border: "border-orange-200", text: "text-orange-600", subText: "text-orange-400" },
+    amber:  { bg: "bg-amber-50",  border: "border-amber-200", text: "text-amber-600", subText: "text-amber-400" },
     violet: { bg: "bg-violet-50",  border: "border-violet-200", text: "text-violet-600", subText: "text-violet-400" },
   };
   const s = styles[color];
@@ -397,7 +397,7 @@ export function ScreenPanel({ screen, onClose }: Props) {
                   <SectionHeader
                     label="Variants"
                     sub={`${screen.variants!.length} variants`}
-                    color="orange"
+                    color="amber"
                   />
                   <CardGrid cols={cols}>
                     {screen.variants!.map((variant) => (
@@ -408,7 +408,7 @@ export function ScreenPanel({ screen, onClose }: Props) {
                         path={screen.path}
                         isVariant
                         compact={compact}
-                        color="orange"
+                        color="amber"
                       />
                     ))}
                   </CardGrid>
