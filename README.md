@@ -2,6 +2,8 @@
 
 Claude Code を使った UI プロトタイピングのテンプレートとスキル集。
 
+<img src="docs/images/cafe-list-grid.png" alt="テンプレートのサンプル画面（Cafe Explorer）" width="800" />
+
 > **Blog**: [開発スピードを上げたくてClaude Code中心のデザイン環境を組んでみた](https://x.com/sota_mikami/status/2031351426241409115)
 > — このテンプレートが生まれた背景と実際のワークフローを紹介しています。
 
@@ -83,6 +85,13 @@ claude
 6. 実装指示書（/spec）・QAチェックリスト（/qa）
 ```
 
+### 画面マップ（/map）
+
+`screens.ts` に画面を定義すると、React Flow で画面遷移図が自動生成されます。
+ノードをクリックすると、その画面の States / Variants / Patterns を一覧表示。
+
+<img src="docs/images/screen-map.png" alt="画面マップ — React Flow で画面遷移を可視化" width="800" />
+
 ### ワイヤーフレーム → リッチプロトタイプ
 
 テンプレートにはグレースケール専用トークン（`--wf-*`）が用意されています。
@@ -110,6 +119,8 @@ claude
 ProtoNav の **「Compare (N)」ボタン** でドロワーが開き、States / Variants / Patterns を横並び比較できます。
 ページ遷移に自動追従するので、画面を切り替えても比較対象が更新されます。
 
+<img src="docs/images/compare-panel.png" alt="Compare パネル — States / Variants を横並び比較" width="800" />
+
 ## テンプレートに含まれるサンプル
 
 テンプレートには **Cafe Explorer** というサンプルアプリが入っています。
@@ -120,6 +131,10 @@ States / Variants / Patterns の実装パターンを具体的なコードで確
 - カフェ詳細（メニュー/レビュータブ、カード型 vs タイムライン型レビュー）
 - 各画面のローディング・空状態バリアント
 - 10枚のサンプルスクリーンショット
+
+| 一覧（グリッド） | 一覧（リスト） | 詳細 |
+|:---:|:---:|:---:|
+| <img src="docs/images/cafe-list-grid.png" width="260" /> | <img src="docs/images/cafe-list-list.png" width="260" /> | <img src="docs/images/cafe-detail.png" width="260" /> |
 
 ## ディレクトリ構成
 
