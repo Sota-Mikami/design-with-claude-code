@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   // Set REPO_NAME env var in GitHub Actions, or leave empty for root deployment.
   basePath: isProd && repoName ? `/${repoName}` : "",
   assetPrefix: isProd && repoName ? `/${repoName}/` : "",
+  env: {
+    NEXT_PUBLIC_BUILD_TIME: new Date().toISOString(),
+  },
 };
 
 export default nextConfig;

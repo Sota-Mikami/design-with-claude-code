@@ -143,13 +143,13 @@ export default function SpecPage() {
             <tr className="border-b border-border">
               <td className="py-2 pr-4">カフェカード名前</td>
               <td className="py-2 pr-4">hover</td>
-              <td className="py-2 pr-4">text-text -> text-primary</td>
+              <td className="py-2 pr-4">text-text → text-primary</td>
               <td className="py-2">150ms</td>
             </tr>
             <tr className="border-b border-border">
               <td className="py-2 pr-4">フィルタチップ</td>
               <td className="py-2 pr-4">click</td>
-              <td className="py-2 pr-4">border -> bg-primary + text-on-fill</td>
+              <td className="py-2 pr-4">border → bg-primary + text-on-fill</td>
               <td className="py-2">instant</td>
             </tr>
             <tr className="border-b border-border">
@@ -181,8 +181,8 @@ export default function SpecPage() {
       {/* --- 5. レスポンシブ挙動 --- */}
       <SectionHeading id="responsive" title="レスポンシブ挙動" />
       <div className="text-sm text-text-sub space-y-2">
-        <p><strong className="text-text">sm (640px):</strong> カフェ一覧 1列 -> 2列グリッド</p>
-        <p><strong className="text-text">lg (1024px):</strong> カフェ一覧 2列 -> 3列グリッド</p>
+        <p><strong className="text-text">sm (640px):</strong> カフェ一覧 1列 → 2列グリッド</p>
+        <p><strong className="text-text">lg (1024px):</strong> カフェ一覧 2列 → 3列グリッド</p>
         <p><strong className="text-text">全幅:</strong> 最大幅 max-w-5xl（一覧）/ max-w-2xl（詳細）で中央寄せ</p>
       </div>
 
@@ -201,7 +201,7 @@ export default function SpecPage() {
             <div className="flex items-center justify-between mb-1">
               <span className="font-medium text-text">{item.label}</span>
               <a href={item.link} className="text-xs text-primary hover:underline">
-                プロトで確認 ->
+                プロトで確認 →
               </a>
             </div>
             <p className="text-text-sub">{item.desc}</p>
