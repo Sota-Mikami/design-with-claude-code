@@ -304,6 +304,10 @@ https://your-org.github.io/proto-feature-name/
 NEXT_PUBLIC_PROTO_PASSWORD=my-secret-pass
 ```
 
+| パスワード画面 | エラー表示 |
+|:---:|:---:|
+| <img src="docs/images/password-gate.png" width="400" /> | <img src="docs/images/password-gate-error.png" width="400" /> |
+
 - パスワードが空（未設定）の場合は認証なしでそのまま表示されます
 - セッション中は一度認証すれば再入力不要です（sessionStorage で管理）
 - GitHub Actions でデプロイする場合は、リポの Settings > Secrets に環境変数を追加してください
@@ -362,6 +366,41 @@ Claude Code が commit → push を実行し、GitHub Actions が自動で再デ
 
 テンプレートには Dockerfile + nginx.conf も含まれています。
 自前サーバー + Coolify や Fly.io 等でホスティングする場合はこちらを使ってください。
+
+## テンプレート更新の取り込み方
+
+このテンプレートは継続的に改善されています。新機能やバグ修正がリリースされたとき、既存のプロジェクトに取り込む方法です。
+
+### 更新の検知
+
+GitHub の **Watch** 機能でリリース通知を受け取れます:
+
+1. このリポジトリの右上にある **Watch** ボタンをクリック
+2. **Custom** → **Releases** にチェックを入れて保存
+3. 新しいリリースが公開されると GitHub からメール通知が届きます
+
+### 更新の取り込み手順
+
+```bash
+# 1. テンプレートをリモートに追加（初回のみ）
+cd your-prototype/
+git remote add template https://github.com/Sota-Mikami/design-with-claude-code.git
+
+# 2. 最新のテンプレートを取得
+git fetch template
+
+# 3. 差分を確認
+git diff HEAD..template/main -- template/
+
+# 4a. 特定のファイルだけ取り込む（おすすめ）
+git checkout template/main -- template/src/app/password-gate.tsx
+git checkout template/main -- template/next.config.ts
+
+# 4b. または Claude Code に任せる
+#   💬 「template リモートの最新変更を確認して、必要なものを取り込んで」
+```
+
+> **Tip**: 大きな変更がある場合は、Release ページの変更内容を読んでから取り込むファイルを選ぶのがおすすめです。
 
 ## デザイントークンのカスタマイズ
 
